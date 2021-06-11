@@ -1,0 +1,3 @@
+[submodule "transfer"]
+	path = transfer
+	url = ../demos-kafka-payment-system-transfer
