@@ -33,4 +33,10 @@ http :8091/transfers/1
 http -v  :8091/transfers id=2 payer=2 payee=1 amount=5
 http :8091/transfers/2
 
+docker-compose restart transfer
+while ! [[ $(http 0:8091/actuator/health 2> /dev/null | jq -r .status ) =~ "UP" ]]; do echo "Waiting for transfer..."; sleep 1; done
+http :8091/transfers/1
+http :8091/transfers/2
+
+
 docker container stop transferlog
