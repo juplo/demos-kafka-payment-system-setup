@@ -31,81 +31,104 @@ services:
         --topic transfers
 
   peter:
-    image: juplo/payment-service-demo--transfer:2.0.0
+    image: juplo/payment-service-demo--transfer:2.1.0
     ports:
       - 8091:8080
     environment:
       juplo.transfer.bootstrap-servers: kafka:9093
       juplo.transfer.group-instance-id: peter
+      juplo.transfer.local-state-store-path: /var/lib/app/peter.bin
+      juplo.transfer.state-store-interval: 20
       juplo.transfer.instance-id-uri-mapping.peter: http://localhost:8091
       juplo.transfer.instance-id-uri-mapping.ute:   http://localhost:8092
       juplo.transfer.instance-id-uri-mapping.franz: http://localhost:8093
       juplo.transfer.instance-id-uri-mapping.beate: http://localhost:8094
       juplo.transfer.instance-id-uri-mapping.klaus: http://localhost:8095
+    volumes:
+      - data:/var/lib/app
     depends_on:
       - zookeeper
       - kafka
 
   ute:
-    image: juplo/payment-service-demo--transfer:2.0.0
+    image: juplo/payment-service-demo--transfer:2.1.0
     ports:
       - 8092:8080
     environment:
       juplo.transfer.bootstrap-servers: kafka:9093
       juplo.transfer.group-instance-id: ute
+      juplo.transfer.local-state-store-path: /var/lib/app/ute.bin
+      juplo.transfer.state-store-interval: 20
       juplo.transfer.instance-id-uri-mapping.peter: http://localhost:8091
       juplo.transfer.instance-id-uri-mapping.ute:   http://localhost:8092
       juplo.transfer.instance-id-uri-mapping.franz: http://localhost:8093
       juplo.transfer.instance-id-uri-mapping.beate: http://localhost:8094
       juplo.transfer.instance-id-uri-mapping.klaus: http://localhost:8095
+    volumes:
+      - data:/var/lib/app
     depends_on:
       - zookeeper
       - kafka
 
   franz:
-    image: juplo/payment-service-demo--transfer:2.0.0
+    image: juplo/payment-service-demo--transfer:2.1.0
     ports:
       - 8093:8080
     environment:
       juplo.transfer.bootstrap-servers: kafka:9093
       juplo.transfer.group-instance-id: franz
+      juplo.transfer.local-state-store-path: /var/lib/app/franz.bin
+      juplo.transfer.state-store-interval: 20
       juplo.transfer.instance-id-uri-mapping.peter: http://localhost:8091
       juplo.transfer.instance-id-uri-mapping.ute:   http://localhost:8092
       juplo.transfer.instance-id-uri-mapping.franz: http://localhost:8093
       juplo.transfer.instance-id-uri-mapping.beate: http://localhost:8094
       juplo.transfer.instance-id-uri-mapping.klaus: http://localhost:8095
+    volumes:
+      - data:/var/lib/app
     depends_on:
       - zookeeper
       - kafka
 
   beate:
-    image: juplo/payment-service-demo--transfer:2.0.0
+    image: juplo/payment-service-demo--transfer:2.1.0
     ports:
       - 8094:8080
     environment:
       juplo.transfer.bootstrap-servers: kafka:9093
       juplo.transfer.group-instance-id: beate
+      juplo.transfer.local-state-store-path: /var/lib/app/beate.bin
+      juplo.transfer.state-store-interval: 20
       juplo.transfer.instance-id-uri-mapping.peter: http://localhost:8091
       juplo.transfer.instance-id-uri-mapping.ute:   http://localhost:8092
       juplo.transfer.instance-id-uri-mapping.franz: http://localhost:8093
       juplo.transfer.instance-id-uri-mapping.beate: http://localhost:8094
       juplo.transfer.instance-id-uri-mapping.klaus: http://localhost:8095
+    volumes:
+      - data:/var/lib/app
     depends_on:
       - zookeeper
       - kafka
 
   klaus:
-    image: juplo/payment-service-demo--transfer:2.0.0
+    image: juplo/payment-service-demo--transfer:2.1.0
     ports:
       - 8095:8080
     environment:
       juplo.transfer.bootstrap-servers: kafka:9093
       juplo.transfer.group-instance-id: klaus
+      juplo.transfer.local-state-store-path: /var/lib/app/klaus.bin
+      juplo.transfer.state-store-interval: 20
       juplo.transfer.instance-id-uri-mapping.peter: http://localhost:8091
       juplo.transfer.instance-id-uri-mapping.ute:   http://localhost:8092
       juplo.transfer.instance-id-uri-mapping.franz: http://localhost:8093
       juplo.transfer.instance-id-uri-mapping.beate: http://localhost:8094
       juplo.transfer.instance-id-uri-mapping.klaus: http://localhost:8095
+    volumes:
+      - data:/var/lib/app
     depends_on:
       - zookeeper
       - kafka
+
+volumes:
+  data:
